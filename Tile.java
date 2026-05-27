@@ -22,8 +22,11 @@ public class Tile extends Button {
     public boolean getFlipped() {
         return flipped;
     }
+    public void flip(){
+        flipped = !flipped;
+    }
     
-    public boolean getFruit() {
+    public String getFruit(){
         return fruit;
     }
 }
