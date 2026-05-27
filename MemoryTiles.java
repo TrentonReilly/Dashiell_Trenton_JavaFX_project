@@ -1,5 +1,12 @@
-import javax.swing.*;
-
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -15,17 +22,29 @@ import javax.swing.*;
  * @version 1.0
  * @since 1.0
 */
-public class MemoryTiles{
+public class MemoryTiles {
     public static void main(String[] args) {
-        //creating instance of JFrame
-        JFrame f= new JFrame();
+        Tile[][] cards = new Tile[4][4];
+        GridPane grid = new GridPane();
         
-        JButton b1 = new JButton("Hello, World!");
-        b1.setBounds(90, 100, 180, 40);
-        f.add(b1);
-
-        f.setSize(400, 400);
-        f.setLayout(null);
-        f.setVisible(true);
+        ArrayList<String> fruits = new ArrayList<String>();
+        for (int i = 0; i < 2; i++) {
+            fruits.add("🍎");
+            fruits.add("🍒");
+            fruits.add("🍓");
+            fruits.add("🍇");
+            fruits.add("🍌");
+            fruits.add("🫐");
+            fruits.add("🍊");
+            fruits.add("🍍");
+        }
+        Collections.shuffle(fruits);
+        
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                cards[i][j] = new Tile(fruits.get(i*4+j));
+                fruits.remove(i*4+j);
+            }
+        }
     }
 }
