@@ -4,10 +4,14 @@ public class Tile extends Button {
     
     private boolean flipped;
     private String fruit;
+    private int x;
+    private int y;
     
-    public Tile(String fruit) {
+    public Tile(String fruit, int x, int y) {
         this.fruit = fruit;
         this.flipped = false;
+        this.x = x;
+        this.y = y;
     }
     
     public boolean equals(Tile other) {
@@ -22,11 +26,20 @@ public class Tile extends Button {
     public boolean getFlipped() {
         return flipped;
     }
-    public void flip(){
-        flipped = !flipped;
+    
+    public String getFruit() {
+        return fruit;
+    }
+
+    public int getX() {
+        return x;
     }
     
-    public String getFruit(){
-        return fruit;
+    public int getY() {
+        return y;
+    }
+    
+    public void flip() {
+        flipped = !flipped;
     }
 }
