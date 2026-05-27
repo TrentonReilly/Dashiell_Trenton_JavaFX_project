@@ -7,6 +7,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collections;
+import javafx.scene.layout.GridPane;
 
 
 /**
@@ -22,11 +23,16 @@ import java.util.Collections;
  * @version 1.0
  * @since 1.0
 */
-public class MemoryTiles {
-    public static void main(String[] args) {
-        Tile[][] cards = new Tile[4][4];
-        GridPane grid = new GridPane();
+public class MemoryTiles extends Application{
+    public static void main(String[] args){
+        launch(args);
+    }
+    @Override
+    public void start(Stage stage) {
         
+        //array list for our tiles
+        Tile[][] cards = new Tile[4][4];
+        //array lost for our fruits that adds each fruit twice.
         ArrayList<String> fruits = new ArrayList<String>();
         for (int i = 0; i < 2; i++) {
             fruits.add("🍎");
@@ -39,12 +45,39 @@ public class MemoryTiles {
             fruits.add("🍍");
         }
         Collections.shuffle(fruits);
-        
+        //adds all elements of fruit list to make tiles for cards list
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 cards[i][j] = new Tile(fruits.get(i*4+j));
-                fruits.remove(i*4+j);
             }
         }
+        
+        
+        //making grid
+        GridPane grid = new GridPane();
+        grid.setGridLinesVisible(true);
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                grid.add(cards[i][j], j, i);
+                
+            }
+        }
+        
+        stage.setTitle("Memory Tiles 4 by 4");
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                cards[i][j].setOnAction(new EventHandler<ActionEvent>()) {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
+        
     }
 }
