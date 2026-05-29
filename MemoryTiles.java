@@ -104,7 +104,7 @@ public class MemoryTiles extends Application {
             }
         }
         
-        var wrapper = new Object(){int timerCount = 20;};
+        var wrapper = new Object(){int timerCount = 120;};
         timer.setOnFinished(event3 -> {
             if (wrapper.timerCount > 0) {
                 wrapper.timerCount--;
@@ -113,9 +113,11 @@ public class MemoryTiles extends Application {
             } else {
                 grid.setDisable(true);
                 boolean won = true;
-                for (Tile card : cards) {
-                    if (!card.getFlipped()) {
-                        won = false;
+                for (Tile[] row : cards){
+                    for (Tile card : row) {
+                        if (!card.getFlipped()) {
+                            won = false;
+                        }
                     }
                 }
                 if (won) {
