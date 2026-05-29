@@ -10,6 +10,8 @@ import java.util.Collections;
 import javafx.scene.layout.GridPane;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 /**
@@ -31,23 +33,23 @@ public class MemoryTiles extends Application {
         launch(args);
     }
     //is outside start b/c needs to be modified throughout
-    private Tile selected = new Tile("", -1, -1);
+    private Tile selected = new Tile(null, -1, -1);
     @Override
     public void start(Stage stage) {
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         //array list for our tiles
         Tile[][] cards = new Tile[4][4];
         //array lost for our fruits that adds each fruit twice.
-        ArrayList<String> fruits = new ArrayList<String>();
+        ArrayList<Image> fruits = new ArrayList<Image>();
         for (int i = 0; i < 2; i++) {
-            fruits.add("🍎");
-            fruits.add("🍒");
-            fruits.add("🍓");
-            fruits.add("🍇");
-            fruits.add("🍌");
-            fruits.add("🫐");
-            fruits.add("🍊");
-            fruits.add("🍍");
+            fruits.add(new Image(getClass().getResourceAsStream("apple.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("banana.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("cherry.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("grape.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("orange.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("pineapple.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("strawberry.png")));
+            fruits.add(new Image(getClass().getResourceAsStream("watermelon.png")));
         }
         Collections.shuffle(fruits);
         //adds all elements of fruit list to make tiles for cards list
@@ -71,7 +73,7 @@ public class MemoryTiles extends Application {
         stage.setTitle("Memory Tiles 4 by 4");
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                //local variables need to be final in lambda expression(used ai to understand error)
+                // local variables need to be final in lambda expression (used ai to understand error)
                 final int tempJ = j;
                 final int tempI = i;
                 Tile currentTile = cards[tempJ][tempI];
@@ -87,6 +89,7 @@ public class MemoryTiles extends Application {
                                 if (!cards[tempI][tempJ].equals(selected)) {
                                     cards[tempI][tempJ].flip();
                                     selected.flip();
+                                    selected = new Tile(null, -1, -1);
                                 }
                                 grid.setDisable(false);
                             });
