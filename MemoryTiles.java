@@ -37,9 +37,11 @@ public class MemoryTiles extends Application {
     @Override
     public void start(Stage stage) {
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        PauseTransition timer = new PauseTransition(Duration.seconds(1));
+        Button timerDisplay = new Button("");
         //array list for our tiles
         Tile[][] cards = new Tile[4][4];
-        //array lost for our fruits that adds each fruit twice.
+        //array list for our fruits that adds each fruit twice.
         ArrayList<String> fruits = new ArrayList<String>();
         for (int i = 0; i < 2; i++) {
             fruits.add("apple.png");
@@ -63,9 +65,10 @@ public class MemoryTiles extends Application {
         //making grid
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
+        grid.add(timerDisplay, 0, 0);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                grid.add(cards[i][j], j, i);
+                grid.add(cards[i][j], j, i+1);
             }
         }
         
@@ -100,6 +103,29 @@ public class MemoryTiles extends Application {
                 });
             }
         }
+        
+        var wrapper = new Object(){int timerCount = 20;};
+        timer.setOnFinished(event3 -> {
+            if (wrapper.timerCount > 0) {
+                wrapper.timerCount--;
+                timerDisplay.setText(Integer.toString(wrapper.timerCount));
+                timer.play();
+            } else {
+                grid.setDisable(true);
+                boolean won = true;
+                for (Tile card : cards) {
+                    if (!card.getFlipped()) {
+                        won = false;
+                    }
+                }
+                if (won) {
+                    timerDisplay.setText("You won!");
+                } else {
+                    timerDisplay.setText("You lost!");
+                }
+            }
+        });
+        timer.play();
         
         stage.setScene(new Scene(grid));
         stage.show();
