@@ -6,20 +6,24 @@ public class Tile extends Button {
     
     private boolean flipped;
     private Image fruit;
+    private String fruitFile;
     private int x;
     private int y;
     
-    public Tile(Image fruit, int x, int y) {
-        this.fruit = fruit;
+    
+    public Tile(String fruitFile, int x, int y) {
+        this.fruitFile = fruitFile;
+        this.fruit = new Image(getClass().getResourceAsStream(fruitFile));
         this.flipped = false;
         this.x = x;
         this.y = y;
         //make buttons bigger
         this.setPrefSize(50, 50);
+        
     }
     
     public boolean equals(Tile other) {
-        if (other.fruit.equals(fruit)) {
+        if (other.fruitFile.equals(fruitFile)) {
             return true;
         }
         else {
@@ -31,10 +35,6 @@ public class Tile extends Button {
         return flipped;
     }
     
-    public Image getFruit() {
-        return fruit;
-    }
-
     public int getX() {
         return x;
     }
