@@ -1,20 +1,21 @@
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Tile extends Button {
     
     private boolean flipped;
-    private String fruit;
+    private Image fruit;
     private int x;
     private int y;
     
-    public Tile(String fruit, int x, int y) {
+    public Tile(Image fruit, int x, int y) {
         this.fruit = fruit;
         this.flipped = false;
         this.x = x;
         this.y = y;
         //make buttons bigger
         this.setPrefSize(50, 50);
-        this.setText("");
     }
     
     public boolean equals(Tile other) {
@@ -30,7 +31,7 @@ public class Tile extends Button {
         return flipped;
     }
     
-    public String getFruit() {
+    public Image getFruit() {
         return fruit;
     }
 
@@ -44,11 +45,15 @@ public class Tile extends Button {
     
     public void flip() {
         flipped = !flipped;
-        if(flipped){
-            this.setText(fruit);
+        if (flipped) {
+            ImageView view = new ImageView(fruit);
+            view.setPreserveRatio(true);
+            view.fitWidthProperty().bind(this.widthProperty());
+            view.fitHeightProperty().bind(this.heightProperty());
+            this.setGraphic(view);
         }
-        else{
-            this.setText("");
+        else { 
+            this.setGraphic(null);
         }
     }
 }
