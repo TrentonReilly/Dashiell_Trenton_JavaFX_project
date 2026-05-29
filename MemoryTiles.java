@@ -33,23 +33,23 @@ public class MemoryTiles extends Application {
         launch(args);
     }
     //is outside start b/c needs to be modified throughout
-    private Tile selected = new Tile(null, -1, -1);
+    private Tile selected = new Tile("", -1, -1);
     @Override
     public void start(Stage stage) {
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         //array list for our tiles
         Tile[][] cards = new Tile[4][4];
         //array lost for our fruits that adds each fruit twice.
-        ArrayList<Image> fruits = new ArrayList<Image>();
+        ArrayList<String> fruits = new ArrayList<String>();
         for (int i = 0; i < 2; i++) {
-            fruits.add(new Image(getClass().getResourceAsStream("apple.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("banana.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("cherry.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("grape.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("orange.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("pineapple.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("strawberry.png")));
-            fruits.add(new Image(getClass().getResourceAsStream("watermelon.png")));
+            fruits.add("apple.png");
+            fruits.add("banana.png");
+            fruits.add("cherry.png");
+            fruits.add("grape.png");
+            fruits.add("orange.png");
+            fruits.add("pineapple.png");
+            fruits.add("strawberry.png");
+            fruits.add("watermelon.png");
         }
         Collections.shuffle(fruits);
         //adds all elements of fruit list to make tiles for cards list
@@ -89,7 +89,7 @@ public class MemoryTiles extends Application {
                                 if (!cards[tempI][tempJ].equals(selected)) {
                                     cards[tempI][tempJ].flip();
                                     selected.flip();
-                                    selected = new Tile(null, -1, -1);
+                                    selected = new Tile("", -1, -1);
                                 }
                                 grid.setDisable(false);
                             });
