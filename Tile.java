@@ -12,6 +12,9 @@ public class Tile extends Button {
         this.flipped = false;
         this.x = x;
         this.y = y;
+        //make buttons bigger
+        this.setPrefSize(50, 50);
+        this.setText("");
     }
     
     public boolean equals(Tile other) {
@@ -41,5 +44,11 @@ public class Tile extends Button {
     
     public void flip() {
         flipped = !flipped;
+        if(flipped){
+            this.setText(fruit);
+        }
+        else{
+            this.setText("");
+        }
     }
 }
