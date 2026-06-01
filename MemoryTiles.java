@@ -1,3 +1,4 @@
+//import all of the javafx packages needed
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +30,7 @@ import javafx.scene.image.ImageView;
 */
 public class MemoryTiles extends Application {
     
+    //launches javafx application
     public static void main(String[] args) {
         launch(args);
     }
@@ -43,7 +45,9 @@ public class MemoryTiles extends Application {
      */
     @Override
     public void start(Stage stage) {
+        //pause timer to make sure tiles stay flipped for 2 seconds
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        //make timer for counting down by 1 displayed on a button
         PauseTransition timer = new PauseTransition(Duration.seconds(1));
         Button timerDisplay = new Button("");
         //array list for our tiles
@@ -60,27 +64,32 @@ public class MemoryTiles extends Application {
             fruits.add("strawberry.png");
             fruits.add("watermelon.png");
         }
+        //shuffles tiles randomly for each game
         Collections.shuffle(fruits);
         //adds all elements of fruit list to make tiles for cards list
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
+                //make tile for each index, i * 4 + j to convert from 2d to 1d index
                 cards[i][j] = new Tile(fruits.get(i*4+j), j, i);
             }
         }
         
         
-        //making grid
+        //make the grid for all of the visuals and button locations
         GridPane grid = new GridPane();
         grid.setGridLinesVisible(true);
+        //add timer to top left
         grid.add(timerDisplay, 0, 0);
+        //add all of the premade tiles to the grid
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 grid.add(cards[i][j], j, i+1);
             }
         }
         
-        
+        //changes window bar to have correcy title
         stage.setTitle("Memory Tiles 4 by 4");
+        //loop through each tile button to give it a handler for when clicked
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 // local variables need to be final in lambda expression (used ai to understand error)
@@ -88,22 +97,32 @@ public class MemoryTiles extends Application {
                 final int tempI = i;
                 Tile currentTile = cards[tempJ][tempI];
                 cards[i][j].setOnAction(new EventHandler<ActionEvent>() {
+                    //when clicked, make that tile selected if no other tile is selected
                     @Override
                     public void handle(ActionEvent event) {
                         if (selected.getX() < 0) {
                             selected = cards[tempI][tempJ];
-                        } else {
+                        } 
+                        else {
+                            //if one already selected, flip both up
                             cards[tempI][tempJ].flip();
                             selected.flip();
+                            //update pause to take action when finished
                             pause.setOnFinished(event2 -> {
+                                //if not the same then unflip them
                                 if (!cards[tempI][tempJ].equals(selected)) {
+                                    //reflip them down
                                     cards[tempI][tempJ].flip();
                                     selected.flip();
                                 }
+                                //update selected to point nowhere in grid
                                 selected = new Tile("", -1, -1);
+                                //make it so you can interact with grid again
                                 grid.setDisable(false);
                             });
+                            //disable the grid before pausing
                             grid.setDisable(true);
+                            //pause for 2 seconds 
                             pause.play();
                         }
                     }
@@ -111,15 +130,20 @@ public class MemoryTiles extends Application {
             }
         }
         
+        //make wrapper because inside lambda variables need to be final or effectively final
+        //wrapper alows it to change variable outside of the lambda instead of inside
         var wrapper = new Object(){int timerCount = 120;};
+        //keep running 1 second timers unless timer is finished
         timer.setOnFinished(event3 -> {
             if (wrapper.timerCount > 0) {
                 wrapper.timerCount--;
                 timerDisplay.setText(Integer.toString(wrapper.timerCount));
                 timer.play();
             } else {
+                //disable grid once timer runs out
                 grid.setDisable(true);
                 boolean won = true;
+                //checks if all tiles in cards is flipped
                 for (Tile[] row : cards){
                     for (Tile card : row) {
                         if (!card.getFlipped()) {
@@ -127,6 +151,7 @@ public class MemoryTiles extends Application {
                         }
                     }
                 }
+                //gives message on if all tiles are flipped or not.
                 if (won) {
                     timerDisplay.setText("You won!");
                 } else {
@@ -134,9 +159,12 @@ public class MemoryTiles extends Application {
                 }
             }
         });
+        //visually start the timer
         timer.play();
         
+        //put grid layout of buttons into window
         stage.setScene(new Scene(grid));
+        //displays window on the screne
         stage.show();
     }
 }
