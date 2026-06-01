@@ -34,6 +34,13 @@ public class MemoryTiles extends Application {
     }
     //is outside start b/c needs to be modified throughout
     private Tile selected = new Tile("", -1, -1);
+    
+    /**
+     * Initializes and displays the primary stage for the 6 x 6 memory tile game
+     * 
+     * @param stage the primary stage for the application where the gridpane and scene
+     * can be seen.
+     */
     @Override
     public void start(Stage stage) {
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
